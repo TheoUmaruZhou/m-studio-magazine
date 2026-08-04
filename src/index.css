@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+/* 启用 class 模式暗色主题 / Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   设计系统 CSS 变量 / Design System Variables
+   ============================================ */
+:root {
+  /* 色彩系统 / Color System */
+  --color-bg-primary: #F7F7F5;       /* 主背景 */
+  --color-bg-secondary: #FFFFFF;     /* 面板背景 */
+  --color-bg-tertiary: #FAF9F6;      /* 次级背景 */
+  --color-bg-canvas: #F0F0EE;        /* 画布背景 */
+  --color-bg-hover: #F9F9F8;         /* 悬停背景 */
+  --color-bg-subtle: #ECECE8;        /* 淡色背景 */
+
+  --color-border: #E0E0DB;           /* 边框 */
+  --color-border-strong: #CCC;       /* 强边框 */
+
+  --color-text-primary: #1A1A1A;     /* 主文字 */
+  --color-text-secondary: #555;      /* 次级文字 */
+  --color-text-tertiary: #777;       /* 三级文字 */
+  --color-text-muted: #888;          /* 弱化文字 */
+
+  --color-accent: #f59e0b;           /* 琥珀强调色 */
+  --color-accent-hover: #d97706;     /* 琥珀悬停 */
+  --color-accent-light: #fef3c7;     /* 琥珀浅色 */
+
+  --color-surface-dark: #171717;     /* 深色按钮 */
+  --color-surface-dark-hover: #262626;
+
+  /* 圆角系统 / Radius System */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* 字体系统 / Font System */
+  --font-ui: 'Plus Jakarta Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: 'Bodoni Moda', 'Cormorant Garamond', 'Playfair Display', 'Noto Serif SC', serif;
+  --font-mono: 'Courier Prime', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* ============================================
+   暗色模式 / Dark Mode
+   ============================================ */
+.dark {
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #171717;
+  --color-bg-tertiary: #1c1c1c;
+  --color-bg-canvas: #0f0f0f;
+  --color-bg-hover: #262626;
+  --color-bg-subtle: #232323;
+
+  --color-border: #2a2a2a;
+  --color-border-strong: #404040;
+
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-tertiary: #737373;
+  --color-text-muted: #525252;
+
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
+  --color-accent-light: #422006;
+
+  --color-surface-dark: #f5f5f5;
+  --color-surface-dark-hover: #e5e5e5;
+}
+
+/* ============================================
+   基础样式 / Base Styles
+   ============================================ */
+@layer base {
+  body {
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+    line-height: 1.6;
+    letter-spacing: 0.025em;
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ============================================
+   工具类 / Utility Classes
+   ============================================ */
+@layer utilities {
+  /* 背景色 / Backgrounds */
+  .bg-app { background-color: var(--color-bg-primary); }
+  .bg-panel { background-color: var(--color-bg-secondary); }
+  .bg-subtle { background-color: var(--color-bg-tertiary); }
+  .bg-canvas { background-color: var(--color-bg-canvas); }
+  .bg-hover { background-color: var(--color-bg-hover); }
+  .bg-muted { background-color: var(--color-bg-subtle); }
+
+  /* 文字色 / Text */
+  .text-app { color: var(--color-text-primary); }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-tertiary { color: var(--color-text-tertiary); }
+  .text-muted { color: var(--color-text-muted); }
+  .text-accent { color: var(--color-accent); }
+
+  /* 边框色 / Borders */
+  .border-app { border-color: var(--color-border); }
+  .border-strong { border-color: var(--color-border-strong); }
+
+  /* 暗色表面 / Dark surface (buttons) */
+  .bg-dark-surface { background-color: var(--color-surface-dark); }
+  .bg-dark-surface-hover:hover { background-color: var(--color-surface-dark-hover); }
+}
+
+/* ============================================
+   动画系统 / Animation System
+   ============================================ */
+
+/* 页面渐入+上移 / Page fade-in + slide up */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 水平滑动进入 / Horizontal slide-in */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 弹性放大 / Spring scale */
+@keyframes spring-in {
+  0% {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 选中边框流动 / Dashed border flow */
+@keyframes dash-flow {
+  to {
+    background-position: 16px 0;
+  }
+}
+
+/* 辅助线渐入 / Guide fade-in */
+@keyframes guide-pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 面板展开 / Panel expand */
+@keyframes panel-expand {
+  from {
+    opacity: 0;
+    max-width: 0;
+  }
+  to {
+    opacity: 1;
+    max-width: 100%;
+  }
+}
+
+/* ============================================
+   动画工具类 / Animation Utilities
+   ============================================ */
+@layer utilities {
+  /* 页面切换动画 / Page transition */
+  .animate-page-enter {
+    animation: page-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-slide-right {
+    animation: slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .animate-slide-left {
+    animation: slide-in-left 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* 弹性放大 / Spring */
+  .animate-spring {
+    animation: spring-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* 选中边框流动 / Selection dash flow */
+  .animate-dash-flow {
+    background-image: repeating-linear-gradient(
+      90deg,
+      #f59e0b 0,
+      #f59e0b 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    background-size: 16px 1px;
+    background-repeat: repeat-x;
+    animation: dash-flow 0.6s linear infinite;
+  }
+
+  /* 辅助线脉冲 / Guide pulse */
+  .animate-guide {
+    animation: guide-pulse 1.2s ease-in-out infinite;
+  }
+
+  /* 按钮交互 / Button interactions */
+  .btn-press {
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+  .btn-press:hover {
+    transform: translateY(-1px);
+  }
+  .btn-press:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  /* 平滑高度过渡 / Smooth height transition */
+  .smooth-expand {
+    transition: max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.3s ease,
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* 选中元素脉冲 / Selected element pulse */
+  @keyframes select-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5), 0 0 0 4px rgba(245, 158, 11, 0.15);
+    }
+    50% {
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.8), 0 0 0 6px rgba(245, 158, 11, 0.25);
+    }
+  }
+  .animate-select-pulse {
+    animation: select-pulse 2s ease-in-out infinite;
+  }
+
+  /* 选中边框流动（虚线）/ Selected dashed border flow */
+  @keyframes dash-border-flow {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+  .animate-dash-border {
+    stroke-dasharray: 6 4;
+    animation: dash-border-flow 0.8s linear infinite;
+  }
+
+  /* 面板折叠过渡 / Panel collapse transition */
+  .panel-transition {
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                min-width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .panel-content-fade {
+    transition: opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* ============================================
+   骨架屏 / Skeleton Screen
+   ============================================ */
+
+/* 骨架闪光动画 / Skeleton shimmer */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@layer utilities {
+  /* 骨架基础块 / Skeleton base block */
+  .skeleton-block {
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-subtle) 0%,
+      var(--color-bg-hover) 50%,
+      var(--color-bg-subtle) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.8s ease-in-out infinite;
+    border-radius: var(--radius-md);
+  }
+
+  /* 骨架文字行 / Skeleton text line */
+  .skeleton-text {
+    height: 10px;
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-subtle) 0%,
+      var(--color-bg-hover) 50%,
+      var(--color-bg-subtle) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.8s ease-in-out infinite;
+    border-radius: var(--radius-sm);
+  }
+
+  /* 骨架圆形 / Skeleton circle */
+  .skeleton-circle {
+    background: linear-gradient(
+      90deg,
+      var(--color-bg-subtle) 0%,
+      var(--color-bg-hover) 50%,
+      var(--color-bg-subtle) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.8s ease-in-out infinite;
+    border-radius: var(--radius-full);
+  }
+
+  /* 骨架淡入 / Skeleton fade-in wrapper */
+  .skeleton-enter {
+    animation: page-enter 0.3s ease-out both;
+  }
+}
+

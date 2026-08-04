@@ -1,0 +1,6 @@
+{
+  "name": "M-STUDIO 摄影杂志排版工具",
+  "description": "面向摄影师的高端独立杂志排版系统，支持典雅网格模板、3D真实翻页预览、全自由文字编辑与高清批量导出。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
